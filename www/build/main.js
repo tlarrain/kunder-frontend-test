@@ -10212,7 +10212,7 @@ var ComponentFactory_ = (function (_super) {
      * @param {?} ngContentSelectors
      */
     function ComponentFactory_(selector, componentType, viewDefFactory, _inputs, _outputs, ngContentSelectors) {
-        var _this =
+        var _this = 
         // Attention: this ctor is called as top level function.
         // Putting any logic in here will destroy closure tree shaking!
         _super.call(this) || this;
@@ -47890,21 +47890,21 @@ var InfiniteScroll = (function () {
         (void 0) /* assert */;
         /* New content is being added at the top, but the scrollTop position stays the same,
           which causes a scroll jump visually. This algorithm makes sure to prevent this.
-
+    
           (Frame 1)
             complete() is called, but the UI hasn't had time to update yet.
             Save the current content dimensions.
             Wait for the next frame using _dom.read, so the UI will be updated.
-
+    
           (Frame 2)
             Read the new content dimensions.
             Calculate the height difference and the new scroll position.
             Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
-
+    
           (Still frame 2, if I'm correct)
             Change the scroll position (= visually maintain the scroll position).
             Change the state to re-enable the InfiniteScroll. This should be after changing the scroll position, or it could cause the InfiniteScroll to be triggered again immediately.
-
+    
           (Frame 3)
             Done.
         */
@@ -56565,7 +56565,10 @@ var ComicsPage = (function () {
     }
     ComicsPage.prototype.getComics = function () {
         var _this = this;
-        this.comicService.getComics().then(function (comics) { return _this.comics = comics; });
+        this.comicService.getComics().then(function (comics) {
+            _this.items = comics;
+            _this.comics = comics;
+        });
     };
     ComicsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ComicsPage');
@@ -56579,10 +56582,13 @@ var ComicsPage = (function () {
         return !isNaN(Date.parse(item.dates[1].date));
     };
     ComicsPage.prototype.getItems = function (ev) {
+        if (this.comics == null) {
+            return null;
+        }
         // set val to the value of the searchbar
         var val = ev.target.value;
         // Reset items back to all of the items
-        this.getComics();
+        this.comics = this.items;
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
             this.comics = this.comics.filter(function (item) {
@@ -56595,11 +56601,12 @@ var ComicsPage = (function () {
 ComicsPage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPage */])(),
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_6" /* Component */])({
-        selector: 'page-comics',template:/*ion-inline-start:"C:\Kunder\tutoriales\ionic\kunder-frontend-test\src\pages\comics\comics.html"*/'<!--\n  Generated template for the ComicsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Marvel Comics</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>\n  <ion-list>\n    <button ion-item *ngFor="let comic of comics" (click)="itemSelected(comic)">\n        <ion-avatar item-start>\n          <img src="{{comic.thumbnail.path}}/standard_small.jpg">\n        </ion-avatar>\n        <h2>{{comic.title}}</h2>\n        <h3 *ngIf="checkDate(comic)">Date: {{comic.dates[1].date | date:\'mediumDate\'}}</h3>\n        <p>Issue no. #{{comic.issueNumber}}</p>\n    </button>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Kunder\tutoriales\ionic\kunder-frontend-test\src\pages\comics\comics.html"*/,
+        selector: 'page-comics',template:/*ion-inline-start:"C:\Kunder\tutoriales\ionic\kunder-frontend-test\src\pages\comics\comics.html"*/'<!--\n  Generated template for the ComicsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Marvel Comics</ion-title>\n  </ion-navbar>\n   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-list>\n    <button ion-item *ngFor="let comic of comics" (click)="itemSelected(comic)">\n        <ion-avatar item-start>\n          <img src="{{comic.thumbnail.path}}/standard_small.jpg">\n        </ion-avatar>\n        <h2>{{comic.title}}</h2>\n        <h3 *ngIf="checkDate(comic)">Date: {{comic.dates[1].date | date:\'mediumDate\'}}</h3>\n        <p>Issue no. #{{comic.issueNumber}}</p>\n    </button>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Kunder\tutoriales\ionic\kunder-frontend-test\src\pages\comics\comics.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__services_comic_service__["a" /* ComicService */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_comic_service__["a" /* ComicService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_comic_service__["a" /* ComicService */]) === "function" && _c || Object])
 ], ComicsPage);
 
+var _a, _b, _c;
 //# sourceMappingURL=comics.js.map
 
 /***/ }),
@@ -71692,7 +71699,7 @@ var Tab = (function (_super) {
      * @param {?} errHandler
      */
     function Tab(parent, app, config, plt, elementRef, zone, renderer, cfr, _cd, gestureCtrl, transCtrl, linker, _dom, errHandler) {
-        var _this =
+        var _this = 
         // A Tab is a NavController for its child pages
         _super.call(this, parent, app, config, plt, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler) || this;
         _this._cd = _cd;

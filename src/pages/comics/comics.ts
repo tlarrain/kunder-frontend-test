@@ -11,13 +11,17 @@ import { ComicService } from '../../services/comic.service';
 })
 export class ComicsPage {
   comics: Comic[];
+  items: Comic[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,  private comicService: ComicService) {
     this.getComics();
   }
 
   getComics(): void {
-    this.comicService.getComics().then(comics => this.comics = comics);
+    this.comicService.getComics().then(comics => {
+      this.items  = comics;
+      this.comics = comics;
+    });
   }
 
   ionViewDidLoad() {
@@ -36,11 +40,14 @@ export class ComicsPage {
 
 
   getItems(ev: any) {
+    if (this.comics == null) {
+      return null
+    }
     // set val to the value of the searchbar
     let val = ev.target.value;
 
     // Reset items back to all of the items
-    this.getComics();
+    this.comics = this.items;
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
