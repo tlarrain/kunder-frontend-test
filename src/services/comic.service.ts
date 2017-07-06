@@ -7,7 +7,7 @@ import { Comic } from '../models/comic';
 
 @Injectable()
 export class ComicService {
-  private comicsUrl = 'http://gateway.marvel.com/v1/public/comics';  // URL to web api
+  private comicsUrl = 'https://gateway.marvel.com/v1/public/comics';  // URL to web api
   private comicsApiKey = '657e820baddaed7c4b951854ca8aaccd&hash=9998ee47210a7a315608fc37f89874e7&ts=1';
   constructor(private http: Http) { }
 
