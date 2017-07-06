@@ -45810,7 +45810,7 @@ var ComicService = (function () {
     }
     ComicService.prototype.getComics = function () {
         var url = this.comicsUrl + "?apikey=" + this.comicsApiKey;
-        return this.http.get(this.comicsUrl + "?apikey=" + this.comicsApiKey)
+        return this.http.get(url)
             .toPromise()
             .then(function (response) { return response.json().data.results; })
             .catch(this.handleError);
@@ -45830,9 +45830,10 @@ var ComicService = (function () {
 }());
 ComicService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["l" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], ComicService);
 
+var _a;
 //# sourceMappingURL=comic.service.js.map
 
 /***/ }),

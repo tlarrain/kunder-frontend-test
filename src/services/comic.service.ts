@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -13,7 +13,7 @@ export class ComicService {
 
   getComics(): Promise<Comic[]> {
     const url = `${this.comicsUrl}?apikey=${this.comicsApiKey}`;
-    return this.http.get(`${this.comicsUrl}?apikey=${this.comicsApiKey}`)
+    return this.http.get(url)
                .toPromise()
                .then(response => response.json().data.results as Comic[])
                .catch(this.handleError);
